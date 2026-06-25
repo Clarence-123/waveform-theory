@@ -1,0 +1,11 @@
+趋势白线:=EMA(EMA(CLOSE,10),10);
+大哥黄线:=(MA(CLOSE,14)+MA(CLOSE,28)+MA(CLOSE,57)+MA(CLOSE,114))/4;
+SHORT:=EMA(CLOSE,10);
+LONG:=EMA(SHORT,10);
+砖型图:=(趋势白线-大哥黄线-EMA(趋势白线-大哥黄线,9))*2;
+VAR1A:=砖型图>0 AND 砖型图>REF(砖型图,1);
+VAR2A:=砖型图>0 AND 砖型图<=REF(砖型图,1);
+VAR3A:=砖型图<0 AND 砖型图<REF(砖型图,1);
+VAR4A:=砖型图<0 AND 砖型图>=REF(砖型图,1);
+VAR5A:=CLOSE>趋势白线 AND 趋势白线>大哥黄线;
+VAR6A:=ABS(CLOSE-大哥黄线)/大哥黄线<=0.015;

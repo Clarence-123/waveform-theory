@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浪潮信息(000977) — 波浪×道氏 三级联立分析</title>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d;
+    --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+    --green: #3fb950; --red: #f85149; --yellow: #d2991d;
+    --purple: #a371f7; --orange: #f0883e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    line-height: 1.6; padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.8em; text-align: center; padding: 20px 0; color: #fff; }
+  h1 span { color: var(--accent); }
+  h2 {
+    font-size: 1.3em; color: var(--accent); border-bottom: 1px solid var(--border);
+    padding: 24px 0 8px; margin-bottom: 16px;
+  }
+  .meta-bar {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    padding: 12px 20px; background: var(--card); border-radius: 8px;
+    border: 1px solid var(--border); margin-bottom: 24px;
+  }
+  .meta-item { text-align: center; }
+  .meta-item .label { font-size: 0.75em; color: var(--muted); }
+  .meta-item .value { font-size: 1.1em; font-weight: 700; }
+  .red { color: var(--red); } .green { color: var(--green); }
+  .yellow { color: var(--yellow); } .purple { color: var(--purple); }
+  .orange { color: var(--orange); }
+
+  .verdict-box {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;
+  }
+  @media (max-width: 768px) { .verdict-box { grid-template-columns: 1fr; } }
+  .verdict-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; text-align: center;
+  }
+  .verdict-card .emoji { font-size: 2em; }
+  .verdict-card .tf { font-size: 0.8em; color: var(--muted); margin: 4px 0; }
+  .verdict-card .bias { font-size: 1.3em; font-weight: 700; margin: 8px 0; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 12px 0 20px;
+    font-size: 0.9em;
+  }
+  th, td { padding: 8px 12px; border: 1px solid var(--border); text-align: center; }
+  th { background: #1c2333; color: var(--accent); font-weight: 600; }
+  tr:nth-child(even) { background: #0d1117; }
+  tr:hover { background: #1a2332; }
+  .tag-ok { color: var(--green); font-weight: 700; }
+  .tag-fail { color: var(--red); font-weight: 700; }
+  .tag-warn { color: var(--yellow); font-weight: 700; }
+
+  .chart-container {
+    background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; margin: 16px 0; overflow-x: auto;
+  }
+  .chart-container h3 { color: var(--accent); margin-bottom: 8px; font-size: 1em; }
+  svg { display: block; width: 100%; }
+  .chart-legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8em; margin-top: 8px; color: var(--muted); }
+  .chart-legend span { display: flex; align-items: center; gap: 4px; }
+  .chart-legend .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  .key-levels {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px; margin: 12px 0;
+  }
+  .level-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 14px; text-align: center;
+  }
+  .level-card .price { font-size: 1.2em; font-weight: 700; }
+  .level-card .desc { font-size: 0.78em; color: var(--muted); }
+  .level-support { border-left: 3px solid var(--green); }
+  .level-resist { border-left: 3px solid var(--red); }
+  .level-critical { border-left: 3px solid var(--yellow); }
+
+  .alert-box {
+    background: #1a1a1a; border: 1px solid var(--red); border-radius: 8px;
+    padding: 16px 20px; margin: 16px 0;
+  }
+  .alert-box h4 { color: var(--red); margin-bottom: 8px; }
+  .alert-box ul { padding-left: 20px; color: var(--text); }
+  .alert-box li { margin: 4px 0; }
+
+  .footer { text-align: center; padding: 20px; color: var(--muted); font-size: 0.75em; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>浪潮信息 <span>000977</span> — 波浪理论 × 道氏理论 三级联立分析</h1>
+
+<div class="meta-bar">
+  <div class="meta-item"><div class="label">最新收盘</div><div class="value red">57.86</div></div>
+  <div class="meta-item"><div class="label">牛市起点(2022-10)</div><div class="value">18.90</div></div>
+  <div class="meta-item"><div class="label">牛市高点(2026-05)</div><div class="value green">79.49</div></div>
+  <div class="meta-item"><div class="label">累计涨幅</div><div class="value purple">+320%</div></div>
+  <div class="meta-item"><div class="label">从高点回撤</div><div class="value red">-27.2%</div></div>
+  <div class="meta-item"><div class="label">分析日期</div><div class="value">2026-06-14</div></div>
+</div>
+
+<!-- ====== 三级联立总判 ====== -->
+<h2>🔮 三级联立总判</h2>
+<div class="verdict-box">
+  <div class="verdict-card">
+    <div class="emoji">📅</div>
+    <div class="tf">周线 · Primary</div>
+    <div class="bias red">🐻 反转候选</div>
+    <div style="font-size:0.85em;color:var(--muted)">衰竭五浪见顶→牛市终结</div>
+  </div>
+  <div class="verdict-card">
+    <div class="emoji">📊</div>
+    <div class="tf">日线 · Secondary</div>
+    <div class="bias orange">🔻 A浪末端</div>
+    <div style="font-size:0.85em;color:var(--muted)">5波下跌近完成，缩量筑底</div>
+  </div>
+  <div class="verdict-card">
+    <div class="emoji">🔍</div>
+    <div class="tf">1H · Daily Noise</div>
+    <div class="bias green">📈 底部构造</div>
+    <div style="font-size:0.85em;color:var(--muted)">卖压衰竭，等放量确认</div>
+  </div>
+</div>
+
+<!-- ====== 周线波浪结构图 ====== -->
+<h2>📅 周线 — 大级别五浪结构 (2022-2026)</h2>
+<div class="chart-container">
+  <h3>🔴 衰竭五浪见顶 · 牛市结构完成</h3>
+  <svg viewBox="0 0 1100 420" id="weekly-chart"></svg>
+  <div class="chart-legend">
+    <span><span class="dot" style="background:#3fb950"></span> 浪①/③/⑤ (驱动)</span>
+    <span><span class="dot" style="background:#f85149"></span> 浪②/④ (调整)</span>
+    <span><span class="dot" style="background:#d2991d"></span> 当前A浪下跌</span>
+    <span style="color:#f85149">⚠ 衰竭五浪：⑤顶79.49 < ③顶80.80</span>
+  </div>
+</div>
+
+<!-- ====== 日线A浪结构图 ====== -->
+<h2>📊 日线 — 当前A浪下跌结构 (79.49→)</h2>
+<div class="chart-container">
+  <h3>🟡 A-5末端 · 缩量筑底 · 57.15=0.382回撤精准支撑</h3>
+  <svg viewBox="0 0 1100 380" id="daily-chart"></svg>
+  <div class="chart-legend">
+    <span><span class="dot" style="background:#f85149"></span> A-1/A-3/A-5 (下跌驱动)</span>
+    <span><span class="dot" style="background:#3fb950"></span> A-2/A-4 (反弹)</span>
+    <span><span class="dot" style="background:#d2991d;border:2px solid #d2991d"></span> 55.73 浪④底(牛熊线)</span>
+    <span><span class="dot" style="background:#a371f7"></span> 0.382 Fib回撤=57.16</span>
+  </div>
+</div>
+
+<!-- ====== 铁律检查 ====== -->
+<h2>⚖️ 波浪三条铁律检查</h2>
+<table>
+  <tr><th>铁律</th><th>条件</th><th>实际</th><th>结果</th></tr>
+  <tr>
+    <td>① 浪2回撤 < 浪1的100%</td>
+    <td>浪②底 > 18.90</td>
+    <td>浪②底 32.45 > 18.90</td>
+    <td class="tag-ok">✅ 通过</td>
+  </tr>
+  <tr>
+    <td>② 浪3不是最短</td>
+    <td>浪③ > 浪① 或 浪⑤</td>
+    <td>浪③ +149% > 浪① +117% > 浪⑤ +42.6%</td>
+    <td class="tag-ok">✅ 通过</td>
+  </tr>
+  <tr>
+    <td>③ 浪4不进入浪1区域</td>
+    <td>浪④底 > 浪①顶 41.13</td>
+    <td>浪④底 55.73 > 41.13</td>
+    <td class="tag-ok">✅ 通过</td>
+  </tr>
+  <tr style="background:#2d1515">
+    <td>⚠ 浪5过浪3顶</td>
+    <td>浪⑤顶 > 浪③顶 80.80</td>
+    <td>浪⑤顶 79.49 < 80.80 ❌</td>
+    <td class="tag-fail">🔴 衰竭五浪！</td>
+  </tr>
+</table>
+
+<!-- ====== Fibonacci 价位 ====== -->
+<h2>📐 Fibonacci 关键价位</h2>
+
+<h3 style="color:var(--red);font-size:1em;margin-top:16px">回调支撑（牛市 18.90 → 80.80）</h3>
+<div class="key-levels">
+  <div class="level-card level-resist"><div class="desc">0.236</div><div class="price red">66.19</div><div class="desc">❌ 已跌破</div></div>
+  <div class="level-card level-critical"><div class="desc">0.382 · 精准支撑</div><div class="price yellow">57.16</div><div class="desc">⚡ 6/11最低57.15</div></div>
+  <div class="level-card level-support"><div class="desc">浪④底 · 牛熊线</div><div class="price green">55.73</div><div class="desc">🔴 最后防线</div></div>
+  <div class="level-card level-support"><div class="desc">0.5</div><div class="price">49.85</div><div class="desc">下一支撑</div></div>
+  <div class="level-card level-support"><div class="desc">0.618</div><div class="price">42.53</div><div class="desc">极限支撑</div></div>
+</div>
+
+<h3 style="color:var(--green);font-size:1em;margin-top:16px">B浪反弹目标（若A浪在57.15结束）</h3>
+<div class="key-levels">
+  <div class="level-card level-resist"><div class="desc">0.382 弱反弹</div><div class="price red">65.70</div></div>
+  <div class="level-card level-resist"><div class="desc">0.5 标准反弹</div><div class="price red">68.32</div></div>
+  <div class="level-card level-resist"><div class="desc">0.618 强反弹</div><div class="price red">70.95</div></div>
+</div>
+
+<!-- ====== 道氏理论三级表 ====== -->
+<h2>🏛️ 道氏理论 · 三级趋势判定</h2>
+<table>
+  <tr><th>维度</th><th>周线 (Primary)</th><th>日线 (Secondary)</th><th>1H (Daily Noise)</th></tr>
+  <tr>
+    <td>方向基调</td>
+    <td class="red">偏空（反转候选）</td>
+    <td class="red">下跌延续</td>
+    <td class="green">中性偏多</td>
+  </tr>
+  <tr>
+    <td>趋势状态</td>
+    <td>reversing_candidate</td>
+    <td>continuing (末端?)</td>
+    <td>底部构造中</td>
+  </tr>
+  <tr>
+    <td>关键阻力</td>
+    <td>80.80 (浪③顶)</td>
+    <td>62.13 (A-4高点)</td>
+    <td>59.50 (短线突破确认)</td>
+  </tr>
+  <tr>
+    <td>关键支撑</td>
+    <td>55.73 (浪④底)</td>
+    <td>55.73 (浪④底)</td>
+    <td>57.15 (近期低点)</td>
+  </tr>
+  <tr>
+    <td>成交量</td>
+    <td>下跌放量→偏空</td>
+    <td>缩量缓跌→衰竭</td>
+    <td>43.8M(远低均量70M)</td>
+  </tr>
+  <tr>
+    <td>假信号风险</td>
+    <td>Medium</td>
+    <td>Low</td>
+    <td>Medium</td>
+  </tr>
+  <tr>
+    <td>失效条件</td>
+    <td>收盘站稳65+</td>
+    <td>跌破55.73</td>
+    <td>跌破57.15</td>
+  </tr>
+</table>
+
+<!-- ====== 风险预警 ====== -->
+<h2>⚠️ 风险预警</h2>
+<div class="alert-box">
+  <h4>🔴 四大红色警报</h4>
+  <ul>
+    <li><strong>衰竭五浪确认：</strong>浪⑤(79.49)未过浪③顶(80.80)，这是大级别见顶的最强信号之一。历史上衰竭浪后往往跟随快速深幅反转。</li>
+    <li><strong>周线MACD死叉：</strong>DIF下穿DEA+柱状翻绿，中长期趋势转空。</li>
+    <li><strong>0.382回撤位精准测试：</strong>6/11最低57.15，距0.382级别支撑57.16仅差1分钱。此处若失守，直接看55.73。</li>
+    <li><strong>浪④底55.73是牛熊分界线：</strong>跌破则确认牛市结构破坏，技术性熊市目标49.85→42.53。</li>
+  </ul>
+</div>
+
+<!-- ====== 量价关系分析 ====== -->
+<h2>📈 量价关系 · 威科夫视角</h2>
+<table>
+  <tr><th>日期</th><th>收盘</th><th>成交量</th><th>量价信号</th><th>威科夫解读</th></tr>
+  <tr><td>05-08</td><td class="green">76.48</td><td>125M</td><td>放量冲高</td><td>Buying Climax 买盘高潮</td></tr>
+  <tr><td>05-14</td><td class="red">71.60</td><td>144M</td><td>巨量长阴</td><td>Distribution 派发确认</td></tr>
+  <tr><td>05-21</td><td class="red">66.31</td><td>88.6M</td><td>跳空下跌</td><td>Sign of Weakness</td></tr>
+  <tr><td>05-29</td><td class="red">64.63</td><td>121M</td><td>高开低走巨量</td><td>Upthrust 上冲失败</td></tr>
+  <tr><td>06-08</td><td class="red">57.89</td><td>72.9M</td><td>放量长阴新低</td><td>Selling Climax? 卖盘高潮</td></tr>
+  <tr style="background:#1a2815"><td>06-12</td><td class="red">57.86</td><td>43.8M</td><td>缩量窄幅</td><td>Stopping Action 停止行为</td></tr>
+</table>
+
+<!-- ====== 操作策略 ====== -->
+<h2>🎯 操作策略矩阵</h2>
+<table>
+  <tr><th>持仓状态</th><th>策略</th><th>触发条件</th></tr>
+  <tr>
+    <td>🔵 空仓观望</td>
+    <td class="green">等待B浪反弹信号</td>
+    <td>站上59.50 + 放量阳线(>60M) → 短线参与B浪</td>
+  </tr>
+  <tr>
+    <td>🟡 轻仓持有</td>
+    <td class="yellow">严格止损 + 反弹减仓</td>
+    <td>止损55.70 / B浪反弹至65+减仓50%</td>
+  </tr>
+  <tr>
+    <td>🔴 重仓持有</td>
+    <td class="red">反弹优先减仓</td>
+    <td>衰竭五浪后风险收益比极不利，任何反弹都是减仓机会</td>
+  </tr>
+  <tr style="background:#2d1515">
+    <td>❌ 所有持仓</td>
+    <td class="red">跌破55.73无条件清仓</td>
+    <td>浪④底跌破=牛市结构破坏，技术性熊市确认</td>
+  </tr>
+</table>
+
+<div class="alert-box" style="border-color:var(--yellow);margin-top:24px">
+  <h4 style="color:var(--yellow)">🟡 替代数浪方案（低概率，但需知晓）</h4>
+  <p>若55.73支撑有效+放量回升至65以上，则当前可能只是浪④的复杂延展（非衰竭五浪后的A浪下跌），
+  牛市结构仍完好，目标可看到85+。但目前量价关系、MACD和衰竭结构均不支持此方案，仅供止损参考。</p>
+</div>
+
+<div class="footer">
+  浪潮信息(000977) · 波浪理论×道氏理论 三级联立分析 · 生成于 2026-06-14 ·
+  数据来源：通达信前复权日线 · 仅供技术分析参考，不构成投资建议
+</div>
+
+</div><!-- .container -->
+
+<script>
+// ===== DATA =====
+const RAW = [{"day": "2022-10-10", "open": "19.830", "high": "19.870", "low": "18.850", "close": "18.900", "volume": "18369372"}, {"day": "2024-03-01", "open": "39.000", "high": "41.130", "low": "39.000", "close": "41.130", "volume": "189860688"}, {"day": "2024-04-15", "open": "37.450", "high": "38.500", "low": "37.280", "close": "37.750", "volume": "57012387"}, {"day": "2024-08-01", "open": "37.440", "high": "37.580", "low": "36.910", "close": "37.050", "volume": "38412436"}, {"day": "2024-08-02", "open": "36.490", "high": "36.830", "low": "35.850", "close": "36.000", "volume": "48359835"}, {"day": "2024-08-05", "open": "35.500", "high": "35.890", "low": "34.410", "close": "34.410", "volume": "52861209"}, {"day": "2024-08-06", "open": "34.990", "high": "35.180", "low": "34.300", "close": "34.830", "volume": "31191508"}, {"day": "2024-08-07", "open": "34.800", "high": "35.030", "low": "33.550", "close": "33.650", "volume": "42725121"}, {"day": "2024-08-08", "open": "33.330", "high": "33.560", "low": "32.410", "close": "33.220", "volume": "43810565"}, {"day": "2024-08-09", "open": "33.550", "high": "33.750", "low": "33.100", "close": "33.100", "volume": "24741622"}, {"day": "2024-08-12", "open": "32.940", "high": "33.260", "low": "32.450", "close": "32.680", "volume": "22775698"}, {"day": "2024-08-13", "open": "32.750", "high": "32.950", "low": "32.520", "close": "32.940", "volume": "21040849"}, {"day": "2024-08-14", "open": "33.150", "high": "33.200", "low": "32.810", "close": "32.810", "volume": "21820361"}, {"day": "2024-08-15", "open": "32.600", "high": "33.480", "low": "32.450", "close": "33.210", "volume": "27779291"}, {"day": "2024-08-16", "open": "33.300", "high": "33.430", "low": "33.030", "close": "33.090", "volume": "22111822"}, {"day": "2024-08-19", "open": "32.920", "high": "33.510", "low": "32.810", "close": "33.290", "volume": "19111482"}, {"day": "2024-08-20", "open": "33.330", "high": "33.380", "low": "32.510", "close": "32.650", "volume": "21008570"}, {"day": "2024-08-21", "open": "32.500", "high": "32.950", "low": "32.420", "close": "32.440", "volume": "19431378"}, {"day": "2024-08-22", "open": "32.500", "high": "32.750", "low": "31.140", "close": "31.460", "volume": "36293109"}, {"day": "2024-08-23", "open": "31.330", "high": "31.780", "low": "31.310", "close": "31.680", "volume": "22820397"}, {"day": "2024-08-26", "open": "31.980", "high": "32.040", "low": "31.160", "close": "31.600", "volume": "23553086"}, {"day": "2024-08-27", "open": "31.310", "high": "31.490", "low": "30.870", "close": "31.020", "volume": "22464822"}, {"day": "2024-08-28", "open": "31.020", "high": "31.300", "low": "30.880", "close": "31.150", "volume": "16050585"}, {"day": "2024-08-29", "open": "30.870", "high": "31.630", "low": "30.600", "close": "31.390", "volume": "27251623"}, {"day": "2024-08-30", "open": "31.370", "high": "32.660", "low": "31.310", "close": "32.380", "volume": "44691422"}, {"day": "2024-09-02", "open": "32.240", "high": "32.380", "low": "31.360", "close": "31.400", "volume": "26351913"}, {"day": "2024-09-03", "open": "31.390", "high": "31.930", "low": "31.310", "close": "31.780", "volume": "18053079"}, {"day": "2024-09-04", "open": "31.310", "high": "31.640", "low": "31.250", "close": "31.420", "volume": "17579001"}, {"day": "2024-09-05", "open": "31.410", "high": "31.910", "low": "31.410", "close": "31.690", "volume": "17538852"}, {"day": "2024-09-06", "open": "31.700", "high": "31.900", "low": "31.080", "close": "31.120", "volume": "21851752"}, {"day": "2024-09-09", "open": "30.780", "high": "31.180", "low": "30.680", "close": "31.020", "volume": "15071535"}, {"day": "2024-09-10", "open": "31.220", "high": "32.180", "low": "30.690", "close": "31.770", "volume": "29750740"}, {"day": "2024-09-11", "open": "31.540", "high": "31.860", "low": "31.510", "close": "31.700", "volume": "16087382"}, {"day": "2024-09-12", "open": "31.960", "high": "32.200", "low": "31.500", "close": "31.500", "volume": "18967888"}, {"day": "2024-09-13", "open": "31.490", "high": "31.800", "low": "31.140", "close": "31.160", "volume": "15647633"}, {"day": "2024-09-18", "open": "31.160", "high": "31.330", "low": "30.700", "close": "31.180", "volume": "14505009"}, {"day": "2024-09-19", "open": "31.380", "high": "31.980", "low": "30.930", "close": "31.640", "volume": "27018586"}, {"day": "2024-09-20", "open": "31.660", "high": "32.570", "low": "31.590", "close": "32.370", "volume": "45979095"}, {"day": "2024-09-23", "open": "32.020", "high": "32.790", "low": "32.020", "close": "32.210", "volume": "33179683"}, {"day": "2024-09-24", "open": "32.380", "high": "33.520", "low": "32.030", "close": "33.500", "volume": "59743154"}, {"day": "2024-09-25", "open": "33.790", "high": "34.370", "low": "33.270", "close": "33.300", "volume": "67770253"}, {"day": "2024-09-26", "open": "33.310", "high": "34.300", "low": "33.200", "close": "34.300", "volume": "52746446"}, {"day": "2024-09-27", "open": "34.940", "high": "37.730", "low": "34.680", "close": "37.730", "volume": "127949753"}, {"day": "2024-09-30", "open": "39.500", "high": "41.500", "low": "38.880", "close": "41.500", "volume": "172092185"}, {"day": "2024-10-08", "open": "45.650", "high": "45.650", "low": "42.200", "close": "45.650", "volume": "184282620"}, {"day": "2024-10-09", "open": "44.000", "high": "47.000", "low": "42.000", "close": "43.200", "volume": "169647636"}, {"day": "2024-10-10", "open": "43.500", "high": "43.990", "low": "40.560", "close": "41.270", "volume": "113929849"}, {"day": "2024-10-11", "open": "40.550", "high": "41.270", "low": "39.000", "close": "39.500", "volume": "75418092"}, {"day": "2024-10-14", "open": "39.620", "high": "40.590", "low": "38.800", "close": "40.450", "volume": "71473994"}, {"day": "2024-10-15", "open": "42.290", "high": "44.150", "low": "41.710", "close": "41.790", "volume": "154015232"}, {"day": "2024-10-16", "open": "40.700", "high": "41.660", "low": "40.580", "close": "40.910", "volume": "73735716"}, {"day": "2024-10-17", "open": "41.450", "high": "43.230", "low": "41.180", "close": "41.630", "volume": "108294798"}, {"day": "2024-10-18", "open": "41.630", "high": "44.770", "low": "41.310", "close": "43.400", "volume": "142182790"}, {"day": "2024-10-21", "open": "43.820", "high": "45.150", "low": "43.410", "close": "43.620", "volume": "137090761"}, {"day": "2024-10-22", "open": "43.140", "high": "43.950", "low": "42.800", "close": "43.290", "volume": "77828499"}, {"day": "2024-10-23", "open": "43.290", "high": "45.120", "low": "42.930", "close": "43.850", "volume": "106128006"}, {"day": "2024-10-24", "open": "43.210", "high": "43.570", "low": "42.510", "close": "43.020", "volume": "68521410"}, {"day": "2024-10-25", "open": "43.210", "high": "43.590", "low": "42.710", "close": "43.200", "volume": "56309009"}, {"day": "2024-10-28", "open": "43.260", "high": "43.900", "low": "42.970", "close": "43.580", "volume": "59876854"}, {"day": "2024-10-29", "open": "43.680", "high": "46.440", "low": "42.890", "close": "44.510", "volume": "143836871"}, {"day": "2024-10-30", "open": "44.000", "high": "45.500", "low": "43.770", "close": "44.830", "volume": "101318374"}, {"day": "2024-10-31", "open": "45.800", "high": "47.500", "low": "45.030", "close": "46.780", "volume": "165024691"}, {"day": "2024-11-01", "open": "45.860", "high": "48.420", "low": "43.510", "close": "43.700", "volume": "146878324"}, {"day": "2024-11-04", "open": "43.250", "high": "46.610", "low": "43.250", "close": "46.100", "volume": "110766219"}, {"day": "2024-11-05", "open": "45.700", "high": "48.380", "low": "45.400", "close": "47.450", "volume": "151720069"}, {"day": "2024-11-06", "open": "47.600", "high": "47.700", "low": "46.000", "close": "46.400", "volume": "124628724"}, {"day": "2024-11-07", "open": "45.780", "high": "47.180", "low": "45.250", "close": "47.010", "volume": "101474403"}, {"day": "2024-11-08", "open": "47.580", "high": "51.710", "low": "47.550", "close": "51.710", "volume": "174776487"}, {"day": "2024-11-11", "open": "53.900", "high": "56.880", "low": "52.800", "close": "54.720", "volume": "257008474"}, {"day": "2024-11-12", "open": "53.950", "high": "56.700", "low": "53.120", "close": "55.880", "volume": "194710522"}, {"day": "2024-11-13", "open": "54.820", "high": "59.500", "low": "54.780", "close": "57.010", "volume": "191179269"}, {"day": "2024-11-14", "open": "55.700", "high": "56.160", "low": "52.300", "close": "52.400", "volume": "173711037"}, {"day": "2024-11-15", "open": "52.290", "high": "53.400", "low": "49.190", "close": "49.210", "volume": "134724319"}, {"day": "2024-11-18", "open": "49.350", "high": "49.750", "low": "46.240", "close": "46.920", "volume": "102923588"}, {"day": "2024-11-19", "open": "46.960", "high": "49.840", "low": "46.120", "close": "48.900", "volume": "112256263"}, {"day": "2024-11-20", "open": "48.390", "high": "49.810", "low": "48.150", "close": "48.890", "volume": "91094585"}, {"day": "2024-11-21", "open": "48.780", "high": "50.050", "low": "48.500", "close": "49.260", "volume": "86556128"}, {"day": "2024-11-22", "open": "48.980", "high": "50.970", "low": "47.480", "close": "47.710", "volume": "103827326"}, {"day": "2024-11-25", "open": "47.380", "high": "47.870", "low": "44.900", "close": "46.450", "volume": "104241510"}, {"day": "2024-11-26", "open": "46.000", "high": "46.580", "low": "45.260", "close": "45.290", "volume": "54495303"}, {"day": "2024-11-27", "open": "45.030", "high": "46.630", "low": "44.560", "close": "46.620", "volume": "70653681"}, {"day": "2024-11-28", "open": "46.580", "high": "48.990", "low": "46.320", "close": "47.210", "volume": "96524212"}, {"day": "2024-11-29", "open": "47.000", "high": "48.600", "low": "46.310", "close": "47.800", "volume": "83671627"}, {"day": "2024-12-02", "open": "47.590", "high": "48.370", "low": "47.510", "close": "48.030", "volume": "64581008"}, {"day": "2024-12-03", "open": "48.030", "high": "48.150", "low": "45.900", "close": "46.500", "volume": "82905701"}, {"day": "2024-12-04", "open": "46.490", "high": "47.030", "low": "45.900", "close": "46.120", "volume": "48969487"}, {"day": "2024-12-05", "open": "46.100", "high": "46.690", "low": "45.960", "close": "46.260", "volume": "36526333"}, {"day": "2024-12-06", "open": "46.890", "high": "48.320", "low": "46.750", "close": "47.840", "volume": "82336228"}, {"day": "2024-12-09", "open": "47.530", "high": "48.050", "low": "46.460", "close": "46.900", "volume": "50656758"}, {"day": "2024-12-10", "open": "48.600", "high": "48.610", "low": "47.000", "close": "47.090", "volume": "62508491"}, {"day": "2024-12-11", "open": "47.000", "high": "47.440", "low": "46.730", "close": "47.100", "volume": "37136926"}, {"day": "2024-12-12", "open": "46.970", "high": "47.480", "low": "46.390", "close": "47.180", "volume": "44935363"}, {"day": "2024-12-13", "open": "46.710", "high": "47.030", "low": "45.750", "close": "45.760", "volume": "47623829"}, {"day": "2024-12-16", "open": "45.790", "high": "46.300", "low": "45.410", "close": "45.600", "volume": "32633441"}, {"day": "2024-12-17", "open": "45.610", "high": "46.920", "low": "45.500", "close": "45.780", "volume": "52822551"}, {"day": "2024-12-18", "open": "45.660", "high": "47.170", "low": "45.200", "close": "46.540", "volume": "49613201"}, {"day": "2024-12-19", "open": "45.990", "high": "51.190", "low": "45.810", "close": "51.190", "volume": "218115914"}, {"day": "2024-12-20", "open": "51.070", "high": "53.000", "low": "50.970", "close": "51.560", "volume": "201431099"}, {"day": "2024-12-23", "open": "52.550", "high": "53.000", "low": "50.260", "close": "50.850", "volume": "133224273"}, {"day": "2024-12-24", "open": "50.910", "high": "54.230", "low": "50.500", "close": "53.880", "volume": "177858879"}, {"day": "2024-12-25", "open": "53.400", "high": "55.330", "low": "52.720", "close": "53.860", "volume": "139170745"}, {"day": "2024-12-26", "open": "53.100", "high": "56.370", "low": "52.310", "close": "55.050", "volume": "139901754"}, {"day": "2024-12-27", "open": "54.800", "high": "55.550", "low": "52.720", "close": "53.430", "volume": "123018447"}, {"day": "2024-12-30", "open": "54.000", "high": "54.550", "low": "52.990", "close": "53.070", "volume": "83412219"}, {"day": "2024-12-31", "open": "53.460", "high": "54.150", "low": "51.600", "close": "51.880", "volume": "94597994"}, {"day": "2025-01-02", "open": "51.930", "high": "52.100", "low": "47.920", "close": "48.690", "volume": "113079818"}, {"day": "2025-01-03", "open": "48.550", "high": "48.800", "low": "45.800", "close": "45.880", "volume": "80718428"}, {"day": "2025-01-06", "open": "45.620", "high": "47.190", "low": "45.360", "close": "45.910", "volume": "66374642"}, {"day": "2025-01-07", "open": "46.110", "high": "48.740", "low": "45.890", "close": "48.580", "volume": "104753719"}, {"day": "2025-01-08", "open": "47.490", "high": "48.350", "low": "46.130", "close": "48.030", "volume": "84933058"}, {"day": "2025-01-09", "open": "47.800", "high": "49.950", "low": "47.550", "close": "49.040", "volume": "87423688"}, {"day": "2025-01-10", "open": "48.650", "high": "48.840", "low": "46.860", "close": "46.860", "volume": "81742412"}, {"day": "2025-01-13", "open": "46.000", "high": "47.270", "low": "46.000", "close": "46.630", "volume": "46414966"}, {"day": "2025-01-14", "open": "46.930", "high": "50.450", "low": "46.000", "close": "50.450", "volume": "109778731"}, {"day": "2025-01-15", "open": "50.510", "high": "52.230", "low": "50.200", "close": "50.970", "volume": "106117426"}, {"day": "2025-01-16", "open": "51.300", "high": "51.700", "low": "49.100", "close": "49.850", "volume": "96451209"}, {"day": "2025-01-17", "open": "49.540", "high": "51.250", "low": "49.010", "close": "50.000", "volume": "74032142"}, {"day": "2025-01-20", "open": "50.660", "high": "51.200", "low": "49.880", "close": "50.420", "volume": "62293138"}, {"day": "2025-01-21", "open": "50.990", "high": "52.940", "low": "50.990", "close": "52.330", "volume": "112004521"}, {"day": "2025-01-22", "open": "52.280", "high": "54.000", "low": "51.710", "close": "52.960", "volume": "104298501"}, {"day": "2025-01-23", "open": "53.560", "high": "53.910", "low": "51.420", "close": "51.740", "volume": "98967094"}, {"day": "2025-01-24", "open": "51.540", "high": "53.190", "low": "51.500", "close": "52.960", "volume": "71492524"}, {"day": "2025-01-27", "open": "55.000", "high": "55.560", "low": "51.730", "close": "51.940", "volume": "117680069"}, {"day": "2025-02-05", "open": "54.500", "high": "56.980", "low": "53.840", "close": "55.710", "volume": "168488064"}, {"day": "2025-02-06", "open": "55.380", "high": "57.080", "low": "54.200", "close": "56.280", "volume": "137447551"}, {"day": "2025-02-07", "open": "56.500", "high": "61.910", "low": "55.700", "close": "60.280", "volume": "234809121"}, {"day": "2025-02-10", "open": "61.000", "high": "64.460", "low": "60.100", "close": "60.820", "volume": "231883018"}, {"day": "2025-02-11", "open": "60.200", "high": "64.330", "low": "60.200", "close": "62.900", "volume": "191793852"}, {"day": "2025-02-12", "open": "62.490", "high": "65.750", "low": "61.620", "close": "62.940", "volume": "178897909"}, {"day": "2025-02-13", "open": "62.370", "high": "62.380", "low": "59.950", "close": "60.670", "volume": "156175113"}, {"day": "2025-02-14", "open": "60.360", "high": "63.670", "low": "60.300", "close": "63.270", "volume": "165201281"}, {"day": "2025-02-17", "open": "66.650", "high": "69.600", "low": "64.700", "close": "67.870", "volume": "211747516"}, {"day": "2025-02-18", "open": "66.000", "high": "66.470", "low": "62.920", "close": "63.140", "volume": "166155794"}, {"day": "2025-02-19", "open": "63.450", "high": "64.570", "low": "62.800", "close": "64.570", "volume": "124234416"}, {"day": "2025-02-20", "open": "64.000", "high": "64.280", "low": "62.220", "close": "63.360", "volume": "104917183"}, {"day": "2025-02-21", "open": "65.610", "high": "69.000", "low": "64.330", "close": "67.750", "volume": "195233531"}, {"day": "2025-02-24", "open": "67.880", "high": "68.880", "low": "66.000", "close": "67.130", "volume": "136019166"}, {"day": "2025-02-25", "open": "64.990", "high": "66.210", "low": "63.880", "close": "64.970", "volume": "117503386"}, {"day": "2025-02-26", "open": "65.010", "high": "65.990", "low": "63.260", "close": "65.080", "volume": "109409305"}, {"day": "2025-02-27", "open": "65.080", "high": "65.100", "low": "61.610", "close": "62.800", "volume": "108463798"}, {"day": "2025-02-28", "open": "61.680", "high": "62.650", "low": "59.000", "close": "59.210", "volume": "96260922"}, {"day": "2025-03-03", "open": "59.330", "high": "59.800", "low": "57.130", "close": "58.240", "volume": "81263107"}, {"day": "2025-03-04", "open": "57.030", "high": "58.870", "low": "57.010", "close": "58.810", "volume": "65431076"}, {"day": "2025-03-05", "open": "58.960", "high": "60.100", "low": "58.230", "close": "60.000", "volume": "75935596"}, {"day": "2025-03-06", "open": "60.620", "high": "62.000", "low": "60.450", "close": "61.390", "volume": "87581212"}, {"day": "2025-03-07", "open": "61.160", "high": "61.250", "low": "59.300", "close": "59.880", "volume": "69431039"}, {"day": "2025-03-10", "open": "59.540", "high": "60.190", "low": "58.790", "close": "59.300", "volume": "44564759"}, {"day": "2025-03-11", "open": "58.180", "high": "59.090", "low": "57.900", "close": "58.820", "volume": "47775118"}, {"day": "2025-03-12", "open": "59.330", "high": "60.880", "low": "58.910", "close": "59.490", "volume": "70048835"}, {"day": "2025-03-13", "open": "59.000", "high": "59.200", "low": "57.500", "close": "57.790", "volume": "51601028"}, {"day": "2025-03-14", "open": "57.670", "high": "59.500", "low": "57.530", "close": "59.270", "volume": "57624263"}, {"day": "2025-03-17", "open": "59.300", "high": "60.160", "low": "58.670", "close": "59.370", "volume": "43126157"}, {"day": "2025-03-18", "open": "59.590", "high": "60.860", "low": "59.500", "close": "59.850", "volume": "51459810"}, {"day": "2025-03-19", "open": "59.860", "high": "60.200", "low": "58.840", "close": "59.060", "volume": "34602679"}, {"day": "2025-03-20", "open": "59.000", "high": "59.500", "low": "58.210", "close": "58.300", "volume": "34360987"}, {"day": "2025-03-21", "open": "57.880", "high": "58.180", "low": "56.500", "close": "56.630", "volume": "44366825"}, {"day": "2025-03-24", "open": "56.650", "high": "57.850", "low": "55.770", "close": "57.620", "volume": "43753618"}, {"day": "2025-03-25", "open": "57.480", "high": "57.710", "low": "55.260", "close": "55.430", "volume": "44248027"}, {"day": "2025-03-26", "open": "54.430", "high": "54.940", "low": "53.580", "close": "53.830", "volume": "65550275"}, {"day": "2025-03-27", "open": "53.300", "high": "54.160", "low": "53.170", "close": "53.570", "volume": "46605626"}, {"day": "2025-03-28", "open": "53.610", "high": "54.100", "low": "53.450", "close": "53.540", "volume": "33200234"}, {"day": "2025-03-31", "open": "52.980", "high": "53.800", "low": "52.220", "close": "53.480", "volume": "45463310"}, {"day": "2025-04-01", "open": "53.600", "high": "53.880", "low": "53.060", "close": "53.070", "volume": "29222347"}, {"day": "2025-04-02", "open": "53.090", "high": "53.670", "low": "52.900", "close": "53.080", "volume": "22864485"}, {"day": "2025-04-03", "open": "52.300", "high": "53.190", "low": "51.880", "close": "52.200", "volume": "29664752"}, {"day": "2025-04-07", "open": "47.620", "high": "49.060", "low": "46.980", "close": "46.980", "volume": "46878514"}, {"day": "2025-04-08", "open": "46.010", "high": "46.780", "low": "43.260", "close": "44.630", "volume": "91509715"}, {"day": "2025-04-09", "open": "43.350", "high": "46.060", "low": "41.570", "close": "45.700", "volume": "83564012"}, {"day": "2025-04-10", "open": "47.200", "high": "48.440", "low": "47.100", "close": "47.250", "volume": "71703171"}, {"day": "2025-04-11", "open": "46.600", "high": "48.200", "low": "46.350", "close": "47.780", "volume": "51209530"}, {"day": "2025-04-14", "open": "48.930", "high": "49.300", "low": "48.080", "close": "48.220", "volume": "48762800"}, {"day": "2025-04-15", "open": "48.100", "high": "48.790", "low": "47.520", "close": "48.350", "volume": "33453076"}, {"day": "2025-04-16", "open": "47.610", "high": "48.050", "low": "46.590", "close": "47.190", "volume": "39132796"}, {"day": "2025-04-17", "open": "46.810", "high": "48.000", "low": "46.800", "close": "47.120", "volume": "27655329"}, {"day": "2025-04-18", "open": "47.120", "high": "47.600", "low": "46.900", "close": "47.290", "volume": "20536441"}, {"day": "2025-04-21", "open": "47.350", "high": "48.690", "low": "46.970", "close": "48.690", "volume": "37440338"}, {"day": "2025-04-22", "open": "48.690", "high": "48.690", "low": "47.800", "close": "47.970", "volume": "28745348"}, {"day": "2025-04-23", "open": "48.400", "high": "49.130", "low": "48.010", "close": "48.580", "volume": "43597083"}, {"day": "2025-04-24", "open": "48.660", "high": "48.680", "low": "47.530", "close": "47.750", "volume": "27571500"}, {"day": "2025-04-25", "open": "48.110", "high": "48.580", "low": "47.850", "close": "48.160", "volume": "29165425"}, {"day": "2025-04-28", "open": "48.160", "high": "49.150", "low": "48.040", "close": "48.050", "volume": "25292059"}, {"day": "2025-04-29", "open": "48.030", "high": "48.980", "low": "47.630", "close": "48.650", "volume": "38272606"}, {"day": "2025-04-30", "open": "49.500", "high": "51.490", "low": "49.030", "close": "50.850", "volume": "74092085"}, {"day": "2025-05-06", "open": "51.790", "high": "52.390", "low": "51.040", "close": "52.280", "volume": "62497864"}, {"day": "2025-05-07", "open": "53.030", "high": "53.300", "low": "51.120", "close": "51.530", "volume": "55380330"}, {"day": "2025-05-08", "open": "51.550", "high": "52.500", "low": "51.550", "close": "52.230", "volume": "39756613"}, {"day": "2025-05-09", "open": "51.930", "high": "51.930", "low": "50.870", "close": "51.290", "volume": "29474582"}, {"day": "2025-05-12", "open": "51.850", "high": "52.000", "low": "51.420", "close": "51.970", "volume": "31890418"}, {"day": "2025-05-13", "open": "52.700", "high": "52.700", "low": "51.250", "close": "51.350", "volume": "30109086"}, {"day": "2025-05-14", "open": "51.570", "high": "52.190", "low": "51.360", "close": "51.850", "volume": "34184011"}, {"day": "2025-05-15", "open": "51.860", "high": "51.900", "low": "50.030", "close": "50.050", "volume": "37750418"}, {"day": "2025-05-16", "open": "49.700", "high": "50.610", "low": "49.630", "close": "50.080", "volume": "23286547"}, {"day": "2025-05-19", "open": "49.980", "high": "50.480", "low": "49.140", "close": "50.310", "volume": "24578612"}, {"day": "2025-05-20", "open": "50.310", "high": "50.660", "low": "50.000", "close": "50.450", "volume": "17980727"}, {"day": "2025-05-21", "open": "50.450", "high": "50.460", "low": "49.780", "close": "50.160", "volume": "17939054"}, {"day": "2025-05-22", "open": "50.000", "high": "50.280", "low": "49.360", "close": "49.500", "volume": "19071923"}, {"day": "2025-05-23", "open": "49.180", "high": "49.840", "low": "48.660", "close": "48.670", "volume": "21693712"}, {"day": "2025-05-26", "open": "49.530", "high": "51.190", "low": "49.520", "close": "50.040", "volume": "39188205"}, {"day": "2025-05-27", "open": "49.810", "high": "49.880", "low": "48.550", "close": "48.690", "volume": "28372742"}, {"day": "2025-05-28", "open": "48.710", "high": "48.970", "low": "48.310", "close": "48.430", "volume": "17739627"}, {"day": "2025-05-29", "open": "48.590", "high": "50.010", "low": "48.560", "close": "49.960", "volume": "36360244"}, {"day": "2025-05-30", "open": "49.510", "high": "49.700", "low": "48.820", "close": "48.950", "volume": "25072318"}, {"day": "2025-06-03", "open": "48.520", "high": "49.120", "low": "48.420", "close": "49.010", "volume": "16625766"}, {"day": "2025-06-04", "open": "49.160", "high": "50.400", "low": "49.150", "close": "49.920", "volume": "30835776"}, {"day": "2025-06-05", "open": "50.280", "high": "51.430", "low": "50.200", "close": "51.390", "volume": "50009638"}, {"day": "2025-06-06", "open": "51.520", "high": "52.100", "low": "51.140", "close": "51.920", "volume": "43278591"}, {"day": "2025-06-09", "open": "51.910", "high": "52.440", "low": "51.400", "close": "52.430", "volume": "42752480"}, {"day": "2025-06-10", "open": "53.000", "high": "53.050", "low": "50.000", "close": "50.550", "volume": "62594851"}, {"day": "2025-06-11", "open": "50.300", "high": "50.790", "low": "50.140", "close": "50.160", "volume": "32740151"}, {"day": "2025-06-12", "open": "49.990", "high": "50.330", "low": "49.650", "close": "49.730", "volume": "25988521"}, {"day": "2025-06-13", "open": "49.460", "high": "49.730", "low": "48.590", "close": "48.810", "volume": "32413452"}, {"day": "2025-06-16", "open": "48.550", "high": "49.800", "low": "48.500", "close": "49.420", "volume": "22205568"}, {"day": "2025-06-17", "open": "49.420", "high": "49.430", "low": "48.600", "close": "48.750", "volume": "21501687"}, {"day": "2025-06-18", "open": "48.770", "high": "49.250", "low": "48.510", "close": "49.000", "volume": "20328363"}, {"day": "2025-06-19", "open": "48.900", "high": "49.260", "low": "48.110", "close": "48.260", "volume": "24545315"}, {"day": "2025-06-20", "open": "48.300", "high": "48.480", "low": "47.710", "close": "47.760", "volume": "18325427"}, {"day": "2025-06-23", "open": "47.300", "high": "48.200", "low": "47.210", "close": "48.140", "volume": "18308550"}, {"day": "2025-06-24", "open": "48.710", "high": "49.460", "low": "48.580", "close": "49.460", "volume": "36075398"}, {"day": "2025-06-25", "open": "49.510", "high": "50.660", "low": "49.340", "close": "50.560", "volume": "44223423"}, {"day": "2025-06-26", "open": "50.670", "high": "51.480", "low": "50.270", "close": "50.380", "volume": "48893649"}, {"day": "2025-06-27", "open": "51.150", "high": "51.300", "low": "50.300", "close": "50.670", "volume": "37216102"}, {"day": "2025-06-30", "open": "50.700", "high": "50.930", "low": "50.400", "close": "50.880", "volume": "29865867"}, {"day": "2025-07-01", "open": "50.810", "high": "50.810", "low": "50.080", "close": "50.440", "volume": "26187515"}, {"day": "2025-07-02", "open": "50.200", "high": "50.200", "low": "49.180", "close": "49.390", "volume": "26280117"}, {"day": "2025-07-03", "open": "49.320", "high": "51.000", "low": "49.320", "close": "50.940", "volume": "47560940"}, {"day": "2025-07-04", "open": "50.600", "high": "51.030", "low": "50.200", "close": "50.310", "volume": "30857955"}, {"day": "2025-07-07", "open": "50.030", "high": "50.160", "low": "49.530", "close": "49.710", "volume": "18209539"}, {"day": "2025-07-08", "open": "49.730", "high": "51.970", "low": "49.730", "close": "51.880", "volume": "75833515"}, {"day": "2025-07-09", "open": "51.800", "high": "51.950", "low": "51.110", "close": "51.280", "volume": "35696293"}, {"day": "2025-07-10", "open": "51.410", "high": "52.220", "low": "51.200", "close": "51.430", "volume": "40533070"}, {"day": "2025-07-11", "open": "51.420", "high": "52.680", "low": "51.030", "close": "52.230", "volume": "55322789"}, {"day": "2025-07-14", "open": "52.500", "high": "52.860", "low": "51.860", "close": "52.100", "volume": "40168121"}, {"day": "2025-07-15", "open": "51.500", "high": "56.640", "low": "51.110", "close": "55.790", "volume": "146396799"}, {"day": "2025-07-16", "open": "55.310", "high": "55.670", "low": "54.360", "close": "54.520", "volume": "81436363"}, {"day": "2025-07-17", "open": "54.420", "high": "55.780", "low": "54.420", "close": "55.320", "volume": "66033081"}, {"day": "2025-07-18", "open": "55.340", "high": "56.240", "low": "54.900", "close": "55.280", "volume": "53939195"}, {"day": "2025-07-21", "open": "55.140", "high": "55.140", "low": "54.060", "close": "54.740", "volume": "46435355"}, {"day": "2025-07-22", "open": "54.480", "high": "54.900", "low": "53.830", "close": "54.100", "volume": "40687529"}, {"day": "2025-07-23", "open": "54.110", "high": "54.580", "low": "53.720", "close": "53.850", "volume": "38072987"}, {"day": "2025-07-24", "open": "53.820", "high": "54.500", "low": "53.820", "close": "54.370", "volume": "35519587"}, {"day": "2025-07-25", "open": "54.550", "high": "54.980", "low": "54.260", "close": "54.890", "volume": "42990558"}, {"day": "2025-07-28", "open": "55.120", "high": "55.270", "low": "54.030", "close": "54.600", "volume": "42878789"}, {"day": "2025-07-29", "open": "54.300", "high": "55.350", "low": "53.850", "close": "55.150", "volume": "49942587"}, {"day": "2025-07-30", "open": "54.920", "high": "55.850", "low": "54.280", "close": "54.980", "volume": "53412407"}, {"day": "2025-07-31", "open": "54.880", "high": "57.120", "low": "54.820", "close": "55.770", "volume": "110881100"}, {"day": "2025-08-01", "open": "55.780", "high": "55.950", "low": "53.570", "close": "54.100", "volume": "65398082"}, {"day": "2025-08-04", "open": "53.560", "high": "54.280", "low": "53.390", "close": "54.070", "volume": "35125362"}, {"day": "2025-08-05", "open": "54.100", "high": "55.600", "low": "53.790", "close": "55.190", "volume": "52921834"}, {"day": "2025-08-06", "open": "54.940", "high": "55.800", "low": "54.520", "close": "55.290", "volume": "42635033"}, {"day": "2025-08-07", "open": "55.290", "high": "56.280", "low": "54.600", "close": "54.700", "volume": "44522543"}, {"day": "2025-08-08", "open": "54.990", "high": "54.990", "low": "53.690", "close": "53.690", "volume": "37451468"}, {"day": "2025-08-11", "open": "53.560", "high": "54.450", "low": "53.500", "close": "54.290", "volume": "30718254"}, {"day": "2025-08-12", "open": "54.300", "high": "56.490", "low": "53.960", "close": "56.250", "volume": "94693656"}, {"day": "2025-08-13", "open": "56.490", "high": "58.390", "low": "56.120", "close": "58.390", "volume": "113658865"}, {"day": "2025-08-14", "open": "58.460", "high": "60.390", "low": "57.700", "close": "58.530", "volume": "129526844"}, {"day": "2025-08-15", "open": "58.550", "high": "58.980", "low": "58.080", "close": "58.680", "volume": "81744579"}, {"day": "2025-08-18", "open": "58.960", "high": "61.600", "low": "58.890", "close": "61.070", "volume": "115826544"}, {"day": "2025-08-19", "open": "60.750", "high": "60.770", "low": "59.470", "close": "59.950", "volume": "82171385"}, {"day": "2025-08-20", "open": "59.500", "high": "65.950", "low": "58.780", "close": "65.950", "volume": "163607375"}, {"day": "2025-08-21", "open": "67.370", "high": "69.430", "low": "65.360", "close": "65.460", "volume": "229449302"}, {"day": "2025-08-22", "open": "65.600", "high": "68.970", "low": "64.640", "close": "68.200", "volume": "178000007"}, {"day": "2025-08-25", "open": "69.720", "high": "71.500", "low": "67.940", "close": "69.150", "volume": "177912320"}, {"day": "2025-08-26", "open": "68.550", "high": "71.380", "low": "68.290", "close": "68.520", "volume": "129069516"}, {"day": "2025-08-27", "open": "68.540", "high": "69.510", "low": "65.980", "close": "66.280", "volume": "160892971"}, {"day": "2025-08-28", "open": "65.200", "high": "68.010", "low": "65.110", "close": "67.900", "volume": "127204096"}, {"day": "2025-08-29", "open": "67.500", "high": "68.600", "low": "65.800", "close": "67.150", "volume": "103704429"}, {"day": "2025-09-01", "open": "70.500", "high": "70.980", "low": "67.530", "close": "68.930", "volume": "145136164"}, {"day": "2025-09-02", "open": "68.000", "high": "68.650", "low": "63.610", "close": "63.810", "volume": "137596858"}, {"day": "2025-09-03", "open": "63.890", "high": "65.500", "low": "62.230", "close": "62.640", "volume": "87561845"}, {"day": "2025-09-04", "open": "62.680", "high": "63.200", "low": "57.690", "close": "58.980", "volume": "109742084"}, {"day": "2025-09-05", "open": "59.090", "high": "60.460", "low": "58.000", "close": "60.200", "volume": "72717480"}, {"day": "2025-09-08", "open": "60.190", "high": "60.700", "low": "59.100", "close": "59.790", "volume": "56436846"}, {"day": "2025-09-09", "open": "59.500", "high": "59.560", "low": "57.830", "close": "58.030", "volume": "47403954"}, {"day": "2025-09-10", "open": "58.580", "high": "60.800", "low": "58.430", "close": "59.740", "volume": "80240561"}, {"day": "2025-09-11", "open": "60.800", "high": "64.280", "low": "59.750", "close": "63.990", "volume": "118664507"}, {"day": "2025-09-12", "open": "63.900", "high": "65.200", "low": "63.110", "close": "64.080", "volume": "96840829"}, {"day": "2025-09-15", "open": "64.120", "high": "65.130", "low": "62.880", "close": "63.770", "volume": "75909896"}, {"day": "2025-09-16", "open": "63.770", "high": "66.460", "low": "63.770", "close": "65.570", "volume": "98673503"}, {"day": "2025-09-17", "open": "65.010", "high": "66.200", "low": "63.880", "close": "65.090", "volume": "69450377"}, {"day": "2025-09-18", "open": "65.140", "high": "67.320", "low": "64.000", "close": "65.560", "volume": "119444080"}, {"day": "2025-09-19", "open": "65.610", "high": "66.060", "low": "63.910", "close": "64.360", "volume": "71778566"}, {"day": "2025-09-22", "open": "64.320", "high": "66.990", "low": "63.850", "close": "66.500", "volume": "94773576"}, {"day": "2025-09-23", "open": "66.980", "high": "68.450", "low": "64.880", "close": "67.160", "volume": "108609406"}, {"day": "2025-09-24", "open": "66.700", "high": "69.140", "low": "65.900", "close": "69.140", "volume": "121290898"}, {"day": "2025-09-25", "open": "70.240", "high": "76.050", "low": "69.220", "close": "76.050", "volume": "140383775"}, {"day": "2025-09-26", "open": "76.450", "high": "76.940", "low": "71.870", "close": "71.990", "volume": "174678619"}, {"day": "2025-09-29", "open": "72.040", "high": "73.110", "low": "70.750", "close": "72.600", "volume": "102415466"}, {"day": "2025-09-30", "open": "73.600", "high": "75.150", "low": "72.330", "close": "74.420", "volume": "105858310"}, {"day": "2025-10-09", "open": "76.880", "high": "80.800", "low": "75.790", "close": "75.960", "volume": "153847911"}, {"day": "2025-10-10", "open": "74.680", "high": "74.930", "low": "69.040", "close": "69.660", "volume": "140294842"}, {"day": "2025-10-13", "open": "66.000", "high": "70.880", "low": "66.000", "close": "70.480", "volume": "87825154"}, {"day": "2025-10-14", "open": "70.880", "high": "71.180", "low": "66.190", "close": "66.720", "volume": "89272178"}, {"day": "2025-10-15", "open": "66.510", "high": "67.900", "low": "65.380", "close": "67.730", "volume": "59644287"}, {"day": "2025-10-16", "open": "67.010", "high": "69.250", "low": "66.780", "close": "67.410", "volume": "55143663"}, {"day": "2025-10-17", "open": "67.510", "high": "67.810", "low": "64.270", "close": "64.410", "volume": "56237353"}, {"day": "2025-10-20", "open": "65.970", "high": "66.310", "low": "64.190", "close": "64.750", "volume": "48688424"}, {"day": "2025-10-21", "open": "65.170", "high": "67.400", "low": "64.620", "close": "67.210", "volume": "65561010"}, {"day": "2025-10-22", "open": "66.590", "high": "67.300", "low": "65.700", "close": "66.520", "volume": "39797050"}, {"day": "2025-10-23", "open": "66.030", "high": "66.170", "low": "63.800", "close": "65.680", "volume": "45609106"}, {"day": "2025-10-24", "open": "66.100", "high": "67.920", "low": "65.960", "close": "67.800", "volume": "59913576"}, {"day": "2025-10-27", "open": "68.900", "high": "68.940", "low": "67.280", "close": "68.410", "volume": "69484392"}, {"day": "2025-10-28", "open": "68.250", "high": "69.970", "low": "67.900", "close": "68.170", "volume": "64947703"}, {"day": "2025-10-29", "open": "68.980", "high": "70.880", "low": "68.460", "close": "70.750", "volume": "85361047"}, {"day": "2025-10-30", "open": "70.750", "high": "71.000", "low": "68.430", "close": "69.370", "volume": "73642447"}, {"day": "2025-10-31", "open": "67.000", "high": "67.420", "low": "65.150", "close": "65.230", "volume": "94356495"}, {"day": "2025-11-03", "open": "64.950", "high": "64.950", "low": "62.530", "close": "63.780", "volume": "60220240"}, {"day": "2025-11-04", "open": "63.700", "high": "64.000", "low": "61.850", "close": "62.300", "volume": "43338593"}, {"day": "2025-11-05", "open": "61.320", "high": "63.020", "low": "60.850", "close": "62.510", "volume": "40497605"}, {"day": "2025-11-06", "open": "62.450", "high": "64.270", "low": "62.320", "close": "63.780", "volume": "43469900"}, {"day": "2025-11-07", "open": "63.000", "high": "63.180", "low": "62.230", "close": "62.400", "volume": "31439144"}, {"day": "2025-11-10", "open": "62.500", "high": "62.750", "low": "61.070", "close": "61.880", "volume": "35710513"}, {"day": "2025-11-11", "open": "62.230", "high": "62.490", "low": "60.060", "close": "60.150", "volume": "38413653"}, {"day": "2025-11-12", "open": "60.050", "high": "60.800", "low": "59.240", "close": "60.130", "volume": "32853984"}, {"day": "2025-11-13", "open": "60.120", "high": "60.990", "low": "59.700", "close": "60.850", "volume": "32099339"}, {"day": "2025-11-14", "open": "60.010", "high": "60.210", "low": "59.250", "close": "59.250", "volume": "28942896"}, {"day": "2025-11-17", "open": "59.090", "high": "60.080", "low": "59.000", "close": "59.680", "volume": "23154303"}, {"day": "2025-11-18", "open": "59.710", "high": "60.990", "low": "59.210", "close": "60.700", "volume": "39431269"}, {"day": "2025-11-19", "open": "61.140", "high": "61.310", "low": "60.210", "close": "60.690", "volume": "26962862"}, {"day": "2025-11-20", "open": "61.550", "high": "61.900", "low": "60.400", "close": "60.790", "volume": "26135000"}, {"day": "2025-11-21", "open": "59.390", "high": "59.980", "low": "57.630", "close": "57.630", "volume": "40442580"}, {"day": "2025-11-24", "open": "58.110", "high": "59.870", "low": "56.930", "close": "59.100", "volume": "37174847"}, {"day": "2025-11-25", "open": "60.000", "high": "61.130", "low": "60.000", "close": "60.110", "volume": "40975902"}, {"day": "2025-11-26", "open": "60.300", "high": "64.330", "low": "60.010", "close": "63.560", "volume": "99539862"}, {"day": "2025-11-27", "open": "63.000", "high": "63.580", "low": "61.950", "close": "62.050", "volume": "63662368"}, {"day": "2025-11-28", "open": "61.850", "high": "62.010", "low": "60.800", "close": "61.590", "volume": "35661890"}, {"day": "2025-12-01", "open": "61.590", "high": "62.600", "low": "61.000", "close": "62.460", "volume": "39630562"}, {"day": "2025-12-02", "open": "62.200", "high": "62.300", "low": "60.900", "close": "61.160", "volume": "31141759"}, {"day": "2025-12-03", "open": "61.000", "high": "61.470", "low": "60.170", "close": "60.360", "volume": "21754154"}, {"day": "2025-12-04", "open": "60.580", "high": "61.860", "low": "60.010", "close": "61.340", "volume": "26797419"}, {"day": "2025-12-05", "open": "61.550", "high": "61.620", "low": "60.300", "close": "61.320", "volume": "23850248"}, {"day": "2025-12-08", "open": "61.480", "high": "64.300", "low": "61.380", "close": "62.690", "volume": "54264558"}, {"day": "2025-12-09", "open": "66.000", "high": "67.000", "low": "64.180", "close": "64.380", "volume": "102846021"}, {"day": "2025-12-10", "open": "63.020", "high": "63.350", "low": "61.710", "close": "63.000", "volume": "57352567"}, {"day": "2025-12-11", "open": "62.860", "high": "62.860", "low": "61.150", "close": "61.150", "volume": "39221195"}, {"day": "2025-12-12", "open": "60.950", "high": "63.430", "low": "60.950", "close": "62.550", "volume": "51307715"}, {"day": "2025-12-15", "open": "61.800", "high": "63.620", "low": "61.650", "close": "62.420", "volume": "47986710"}, {"day": "2025-12-16", "open": "62.110", "high": "62.750", "low": "60.060", "close": "60.550", "volume": "36910710"}, {"day": "2025-12-17", "open": "60.560", "high": "63.120", "low": "60.400", "close": "62.850", "volume": "44429025"}, {"day": "2025-12-18", "open": "62.030", "high": "62.660", "low": "61.240", "close": "61.260", "volume": "30057403"}, {"day": "2025-12-19", "open": "61.670", "high": "62.950", "low": "61.500", "close": "61.620", "volume": "31174445"}, {"day": "2025-12-22", "open": "62.190", "high": "65.220", "low": "62.190", "close": "64.390", "volume": "84125807"}, {"day": "2025-12-23", "open": "64.400", "high": "65.700", "low": "64.300", "close": "65.000", "volume": "48354042"}, {"day": "2025-12-24", "open": "65.130", "high": "67.050", "low": "64.610", "close": "66.500", "volume": "59088888"}, {"day": "2025-12-25", "open": "66.480", "high": "67.350", "low": "65.780", "close": "66.330", "volume": "44566571"}, {"day": "2025-12-26", "open": "66.360", "high": "68.390", "low": "66.330", "close": "67.000", "volume": "56767217"}, {"day": "2025-12-29", "open": "66.830", "high": "68.780", "low": "66.600", "close": "67.620", "volume": "52329158"}, {"day": "2025-12-30", "open": "67.000", "high": "68.150", "low": "66.340", "close": "67.560", "volume": "33438904"}, {"day": "2025-12-31", "open": "67.800", "high": "67.890", "low": "66.490", "close": "66.600", "volume": "30676572"}, {"day": "2026-01-05", "open": "67.090", "high": "68.180", "low": "66.900", "close": "67.880", "volume": "41857189"}, {"day": "2026-01-06", "open": "67.980", "high": "69.190", "low": "67.300", "close": "68.090", "volume": "59676404"}, {"day": "2026-01-07", "open": "68.150", "high": "68.480", "low": "66.750", "close": "67.420", "volume": "46970812"}, {"day": "2026-01-08", "open": "67.450", "high": "69.300", "low": "66.790", "close": "67.120", "volume": "65762845"}, {"day": "2026-01-09", "open": "66.630", "high": "69.430", "low": "66.200", "close": "68.900", "volume": "71967949"}, {"day": "2026-01-12", "open": "69.360", "high": "71.380", "low": "69.200", "close": "70.770", "volume": "82948473"}, {"day": "2026-01-13", "open": "71.120", "high": "71.400", "low": "67.100", "close": "67.660", "volume": "76313403"}, {"day": "2026-01-14", "open": "68.230", "high": "71.600", "low": "68.150", "close": "69.550", "volume": "93489011"}, {"day": "2026-01-15", "open": "69.810", "high": "69.820", "low": "67.550", "close": "68.130", "volume": "53617203"}, {"day": "2026-01-16", "open": "68.700", "high": "69.450", "low": "67.030", "close": "68.090", "volume": "50262029"}, {"day": "2026-01-19", "open": "67.490", "high": "67.530", "low": "65.360", "close": "65.800", "volume": "68029027"}, {"day": "2026-01-20", "open": "65.770", "high": "65.980", "low": "64.060", "close": "64.520", "volume": "42783228"}, {"day": "2026-01-21", "open": "64.060", "high": "66.840", "low": "64.000", "close": "65.820", "volume": "49501094"}, {"day": "2026-01-22", "open": "66.750", "high": "67.460", "low": "64.710", "close": "65.090", "volume": "46634350"}, {"day": "2026-01-23", "open": "65.200", "high": "65.430", "low": "64.360", "close": "64.880", "volume": "40004745"}, {"day": "2026-01-26", "open": "65.090", "high": "68.060", "low": "65.090", "close": "65.840", "volume": "71971012"}, {"day": "2026-01-27", "open": "65.010", "high": "65.020", "low": "62.010", "close": "63.850", "volume": "65527139"}, {"day": "2026-01-28", "open": "64.270", "high": "65.500", "low": "63.360", "close": "64.870", "volume": "53479993"}, {"day": "2026-01-29", "open": "64.200", "high": "64.440", "low": "62.700", "close": "63.000", "volume": "41295896"}, {"day": "2026-01-30", "open": "62.700", "high": "63.850", "low": "61.620", "close": "62.900", "volume": "33075355"}, {"day": "2026-02-02", "open": "62.950", "high": "63.640", "low": "60.820", "close": "60.890", "volume": "39163602"}, {"day": "2026-02-03", "open": "61.500", "high": "61.620", "low": "60.100", "close": "61.120", "volume": "35583388"}, {"day": "2026-02-04", "open": "60.500", "high": "60.500", "low": "59.100", "close": "59.900", "volume": "37932776"}, {"day": "2026-02-05", "open": "59.200", "high": "60.170", "low": "59.150", "close": "59.670", "volume": "24852388"}, {"day": "2026-02-06", "open": "59.060", "high": "60.230", "low": "58.500", "close": "59.390", "volume": "31071349"}, {"day": "2026-02-09", "open": "60.770", "high": "60.970", "low": "60.050", "close": "60.490", "volume": "35979420"}, {"day": "2026-02-10", "open": "60.900", "high": "62.490", "low": "60.650", "close": "62.000", "volume": "49882111"}, {"day": "2026-02-11", "open": "62.200", "high": "63.000", "low": "61.710", "close": "62.080", "volume": "36562256"}, {"day": "2026-02-12", "open": "62.900", "high": "65.480", "low": "62.500", "close": "64.770", "volume": "73768937"}, {"day": "2026-02-13", "open": "63.510", "high": "65.990", "low": "63.510", "close": "65.330", "volume": "59495239"}, {"day": "2026-02-24", "open": "65.900", "high": "66.360", "low": "63.270", "close": "63.390", "volume": "58688675"}, {"day": "2026-02-25", "open": "63.220", "high": "63.260", "low": "62.000", "close": "62.570", "volume": "41063561"}, {"day": "2026-02-26", "open": "62.610", "high": "63.770", "low": "62.000", "close": "63.070", "volume": "42077863"}, {"day": "2026-02-27", "open": "62.150", "high": "65.030", "low": "61.630", "close": "63.880", "volume": "54425213"}, {"day": "2026-03-02", "open": "62.620", "high": "63.160", "low": "61.160", "close": "61.260", "volume": "55695577"}, {"day": "2026-03-03", "open": "61.600", "high": "62.130", "low": "58.700", "close": "58.730", "volume": "50915194"}, {"day": "2026-03-04", "open": "57.900", "high": "59.530", "low": "57.770", "close": "58.330", "volume": "30224649"}, {"day": "2026-03-05", "open": "59.370", "high": "60.000", "low": "58.500", "close": "59.330", "volume": "34443051"}, {"day": "2026-03-06", "open": "59.000", "high": "59.500", "low": "58.580", "close": "59.430", "volume": "24880651"}, {"day": "2026-03-09", "open": "59.790", "high": "61.800", "low": "58.360", "close": "61.770", "volume": "58059028"}, {"day": "2026-03-10", "open": "62.650", "high": "63.260", "low": "61.340", "close": "61.990", "volume": "56340324"}, {"day": "2026-03-11", "open": "62.000", "high": "63.000", "low": "61.810", "close": "62.350", "volume": "42514235"}, {"day": "2026-03-12", "open": "61.770", "high": "64.840", "low": "61.600", "close": "63.300", "volume": "66747097"}, {"day": "2026-03-13", "open": "62.050", "high": "63.510", "low": "60.790", "close": "61.790", "volume": "52660042"}, {"day": "2026-03-16", "open": "60.700", "high": "60.860", "low": "59.900", "close": "60.600", "volume": "29524086"}, {"day": "2026-03-17", "open": "60.880", "high": "61.190", "low": "59.000", "close": "59.040", "volume": "31791425"}, {"day": "2026-03-18", "open": "59.210", "high": "62.580", "low": "59.000", "close": "62.360", "volume": "50898126"}, {"day": "2026-03-19", "open": "61.000", "high": "62.460", "low": "60.690", "close": "61.400", "volume": "38730460"}, {"day": "2026-03-20", "open": "61.610", "high": "61.710", "low": "59.500", "close": "59.500", "volume": "40211746"}, {"day": "2026-03-23", "open": "58.260", "high": "58.440", "low": "55.660", "close": "55.730", "volume": "45695980"}, {"day": "2026-03-24", "open": "56.780", "high": "58.490", "low": "55.660", "close": "58.060", "volume": "35876115"}, {"day": "2026-03-25", "open": "58.060", "high": "60.220", "low": "58.000", "close": "59.540", "volume": "40454700"}, {"day": "2026-03-26", "open": "59.450", "high": "60.090", "low": "57.600", "close": "57.960", "volume": "29475349"}, {"day": "2026-03-27", "open": "57.010", "high": "58.040", "low": "56.330", "close": "57.390", "volume": "25895055"}, {"day": "2026-03-30", "open": "56.050", "high": "57.240", "low": "55.360", "close": "56.700", "volume": "29259027"}, {"day": "2026-03-31", "open": "56.500", "high": "57.750", "low": "56.010", "close": "56.080", "volume": "23462835"}, {"day": "2026-04-01", "open": "57.430", "high": "58.860", "low": "57.120", "close": "58.480", "volume": "46409594"}, {"day": "2026-04-02", "open": "58.010", "high": "58.370", "low": "56.260", "close": "56.650", "volume": "30100497"}, {"day": "2026-04-03", "open": "57.120", "high": "58.000", "low": "56.730", "close": "56.940", "volume": "24878064"}, {"day": "2026-04-07", "open": "57.370", "high": "59.990", "low": "57.330", "close": "59.470", "volume": "59586525"}, {"day": "2026-04-08", "open": "60.660", "high": "63.100", "low": "59.860", "close": "62.680", "volume": "70790050"}, {"day": "2026-04-09", "open": "61.500", "high": "65.660", "low": "61.300", "close": "65.070", "volume": "106255949"}, {"day": "2026-04-10", "open": "65.770", "high": "69.200", "low": "65.280", "close": "67.500", "volume": "117289253"}, {"day": "2026-04-13", "open": "66.000", "high": "70.190", "low": "65.810", "close": "68.340", "volume": "105560311"}, {"day": "2026-04-14", "open": "69.000", "high": "69.310", "low": "66.850", "close": "67.990", "volume": "79882464"}, {"day": "2026-04-15", "open": "67.970", "high": "70.160", "low": "66.950", "close": "68.880", "volume": "88658327"}, {"day": "2026-04-16", "open": "68.420", "high": "69.190", "low": "67.220", "close": "68.280", "volume": "60857716"}, {"day": "2026-04-17", "open": "68.980", "high": "69.680", "low": "67.850", "close": "68.230", "volume": "61797175"}, {"day": "2026-04-20", "open": "69.450", "high": "75.050", "low": "69.450", "close": "73.120", "volume": "148677609"}, {"day": "2026-04-21", "open": "71.010", "high": "72.230", "low": "68.300", "close": "71.370", "volume": "107085311"}, {"day": "2026-04-22", "open": "71.650", "high": "75.440", "low": "70.980", "close": "74.200", "volume": "101649417"}, {"day": "2026-04-23", "open": "74.320", "high": "75.150", "low": "72.480", "close": "73.830", "volume": "69404790"}, {"day": "2026-04-24", "open": "73.780", "high": "75.620", "low": "72.000", "close": "74.850", "volume": "93362100"}, {"day": "2026-04-27", "open": "75.000", "high": "75.990", "low": "72.950", "close": "73.160", "volume": "67154361"}, {"day": "2026-04-28", "open": "73.000", "high": "73.060", "low": "70.370", "close": "70.830", "volume": "59967731"}, {"day": "2026-04-29", "open": "70.480", "high": "73.000", "low": "69.690", "close": "72.280", "volume": "50964877"}, {"day": "2026-04-30", "open": "69.500", "high": "70.500", "low": "66.150", "close": "69.750", "volume": "119991057"}, {"day": "2026-05-06", "open": "71.000", "high": "74.780", "low": "71.000", "close": "73.220", "volume": "100776559"}, {"day": "2026-05-07", "open": "73.220", "high": "73.450", "low": "71.780", "close": "73.240", "volume": "64043156"}, {"day": "2026-05-08", "open": "72.130", "high": "79.490", "low": "71.100", "close": "76.480", "volume": "125184330"}, {"day": "2026-05-11", "open": "77.100", "high": "78.240", "low": "75.600", "close": "76.000", "volume": "93727040"}, {"day": "2026-05-12", "open": "76.500", "high": "76.550", "low": "72.540", "close": "73.130", "volume": "76575806"}, {"day": "2026-05-13", "open": "72.660", "high": "77.580", "low": "72.110", "close": "77.380", "volume": "99741679"}, {"day": "2026-05-14", "open": "78.000", "high": "78.150", "low": "70.200", "close": "71.600", "volume": "144468697"}, {"day": "2026-05-15", "open": "71.600", "high": "72.720", "low": "69.840", "close": "70.210", "volume": "78827761"}, {"day": "2026-05-18", "open": "69.900", "high": "72.770", "low": "69.400", "close": "70.610", "volume": "65286899"}, {"day": "2026-05-19", "open": "70.000", "high": "72.490", "low": "67.300", "close": "72.230", "volume": "79142224"}, {"day": "2026-05-20", "open": "71.710", "high": "74.250", "low": "70.880", "close": "71.230", "volume": "61018805"}, {"day": "2026-05-21", "open": "72.280", "high": "72.300", "low": "66.000", "close": "66.310", "volume": "88570471"}, {"day": "2026-05-22", "open": "67.200", "high": "68.580", "low": "65.950", "close": "68.250", "volume": "56820922"}, {"day": "2026-05-25", "open": "69.280", "high": "70.600", "low": "68.020", "close": "69.200", "volume": "61035939"}, {"day": "2026-05-26", "open": "68.510", "high": "68.510", "low": "65.830", "close": "67.300", "volume": "62563932"}, {"day": "2026-05-27", "open": "66.940", "high": "67.860", "low": "64.300", "close": "64.520", "volume": "71199678"}, {"day": "2026-05-28", "open": "64.300", "high": "66.660", "low": "63.070", "close": "66.410", "volume": "61880907"}, {"day": "2026-05-29", "open": "71.000", "high": "72.030", "low": "64.000", "close": "64.630", "volume": "121243528"}, {"day": "2026-06-01", "open": "66.710", "high": "67.480", "low": "63.860", "close": "64.140", "volume": "101762567"}, {"day": "2026-06-02", "open": "64.960", "high": "65.970", "low": "63.500", "close": "65.000", "volume": "76698941"}, {"day": "2026-06-03", "open": "63.800", "high": "67.370", "low": "63.520", "close": "64.220", "volume": "92461264"}, {"day": "2026-06-04", "open": "63.010", "high": "64.100", "low": "62.080", "close": "63.360", "volume": "52189890"}, {"day": "2026-06-05", "open": "62.750", "high": "65.100", "low": "61.030", "close": "62.140", "volume": "71699306"}, {"day": "2026-06-08", "open": "60.000", "high": "60.700", "low": "57.400", "close": "57.890", "volume": "72896121"}, {"day": "2026-06-09", "open": "58.790", "high": "59.500", "low": "57.910", "close": "59.460", "volume": "44807300"}, {"day": "2026-06-10", "open": "58.880", "high": "62.130", "low": "58.660", "close": "59.390", "volume": "65768586"}, {"day": "2026-06-11", "open": "58.980", "high": "59.430", "low": "57.150", "close": "57.840", "volume": "44104103"}, {"day": "2026-06-12", "open": "58.800", "high": "59.230", "low": "57.730", "close": "57.860", "volume": "43795236"}];
+
+// Parse to numbers
+const data = RAW.map(r => ({
+  day: r.day,
+  o: +r.open, h: +r.high, l: +r.low, c: +r.close, v: +r.volume
+}));
+
+// ===== Helper: find local extremes =====
+function findMax(arr, from, to) {
+  let mx = arr[from];
+  for (let i = from; i <= to; i++) if (arr[i].h > mx.h) mx = arr[i];
+  return mx;
+}
+function findMin(arr, from, to) {
+  let mn = arr[from];
+  for (let i = from; i <= to; i++) if (arr[i].l < mn.l) mn = arr[i];
+  return mn;
+}
+function idxOf(arr, item) {
+  for (let i = 0; i < arr.length; i++) if (arr[i].day === item.day) return i;
+  return -1;
+}
+
+// ===== WEEKLY CHART =====
+(function drawWeekly() {
+  const svg = document.getElementById('weekly-chart');
+  const W = 1100, H = 420;
+  const pad = { top: 40, right: 30, bottom: 60, left: 70 };
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+
+  // Use data from 2024-08 to present
+  const startDate = '2024-08-01';
+  const wData = data.filter(r => r.day >= startDate);
+  const allH = wData.map(r => r.h);
+  const allL = wData.map(r => r.l);
+  const yMin = Math.min(...allL) - 3;
+  const yMax = Math.max(...allH) + 3;
+  const xScale = i => pad.left + (i / (wData.length - 1)) * pw;
+  const yScale = v => pad.top + ph - ((v - yMin) / (yMax - yMin)) * ph;
+
+  let html = '';
+
+  // Grid
+  for (let y = 30; y <= 85; y += 5) {
+    const yy = yScale(y);
+    html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${yy}" y2="${yy}" stroke="#21262d" stroke-width="0.5"/>`;
+    html += `<text x="${pad.left-5}" y="${yy+4}" fill="#8b949e" font-size="10" text-anchor="end">${y}</text>`;
+  }
+
+  // Candles (sample every 2nd for clarity)
+  const step = Math.max(1, Math.floor(wData.length / 200));
+  for (let i = 0; i < wData.length; i += step) {
+    const d = wData[i];
+    const x = xScale(i);
+    const wickW = 0.8;
+    const bodyW = Math.max(1, step * 0.9);
+    const color = d.c >= d.o ? '#3fb950' : '#f85149';
+    html += `<line x1="${x}" x2="${x}" y1="${yScale(d.l)}" y2="${yScale(d.h)}" stroke="${color}" stroke-width="${wickW}"/>`;
+    const y1 = yScale(Math.max(d.o, d.c)), y2 = yScale(Math.min(d.o, d.c));
+    html += `<rect x="${x-bodyW/2}" y="${y2}" width="${bodyW}" height="${Math.max(0.5, y1-y2)}" fill="${color}" opacity="0.85"/>`;
+  }
+
+  // Major wave labels
+  const wavePts = [
+    { day: '2024-08-15', price: 32.45, label: '浪①起点', color: '#3fb950', yOff: -18 },
+    { day: '2024-03-01', price: 41.13, label: '浪①顶', color: '#3fb950', yOff: -14 },
+    { day: '2025-04-09', price: 41.57, label: '浪②底', color: '#f85149', yOff: 14 },
+    { day: '2025-10-09', price: 80.80, label: '浪③顶 80.80', color: '#3fb950', yOff: -18 },
+    { day: '2025-11-21', price: 57.63, label: '浪④-A', color: '#f85149', yOff: 14 },
+    { day: '2026-01-12', price: 71.38, label: '浪④-B', color: '#d2991d', yOff: -14 },
+    { day: '2026-03-23', price: 55.73, label: '浪④底 55.73', color: '#f85149', yOff: 14 },
+    { day: '2026-05-08', price: 79.49, label: '浪⑤顶 79.49 ⚠️', color: '#f85149', yOff: -18 },
+  ];
+
+  for (const pt of wavePts) {
+    const idx = wData.findIndex(r => r.day >= pt.day);
+    if (idx < 0) continue;
+    const x = xScale(idx), y = yScale(pt.price);
+    html += `<circle cx="${x}" cy="${y}" r="5" fill="${pt.color}" stroke="#fff" stroke-width="1.5"/>`;
+    html += `<text x="${x}" y="${y + pt.yOff}" fill="${pt.color}" font-size="10" text-anchor="middle" font-weight="700">${pt.label}</text>`;
+  }
+
+  // Draw wave paths
+  function wavePath(pts) {
+    let d = '';
+    for (let i = 0; i < pts.length; i++) {
+      const idx = wData.findIndex(r => r.day >= pts[i].day);
+      if (idx < 0) continue;
+      const x = xScale(idx), y = yScale(pts[i].price);
+      d += (i === 0 ? 'M' : 'L') + x + ',' + y + ' ';
+    }
+    return d;
+  }
+
+  // Wave 1: 32.45 -> 41.13
+  html += `<path d="${wavePath([{day:'2024-08-15',price:32.45},{day:'2024-09-01',price:34},{day:'2024-10-15',price:36},{day:'2024-11-15',price:40},{day:'2025-01-15',price:39},{day:'2025-02-17',price:41.13}])}" stroke="#3fb950" stroke-width="2" fill="none" opacity="0.7"/>`;
+
+  // Wave 2: 41.13 -> 32.45
+  html += `<path d="${wavePath([{day:'2025-02-17',price:41.13},{day:'2025-03-15',price:37},{day:'2025-04-09',price:41.57}])}" stroke="#f85149" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="6,3"/>`;
+
+  // Hmm, let me keep the wave annotation simpler. Let me use the actual wave labels.
+
+  // Highlight current position
+  const lastIdx = wData.length - 1;
+  const lastX = xScale(lastIdx), lastY = yScale(wData[lastIdx].c);
+  html += `<circle cx="${lastX}" cy="${lastY}" r="8" fill="#d2991d" stroke="#fff" stroke-width="2"/>`;
+  html += `<text x="${lastX+8}" y="${lastY-10}" fill="#d2991d" font-size="11" font-weight="700">当前位置 57.86</text>`;
+
+  // 55.73 support line
+  const sup55Y = yScale(55.73);
+  html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${sup55Y}" y2="${sup55Y}" stroke="#d2991d" stroke-width="1.5" stroke-dasharray="8,4"/>`;
+  html += `<text x="${W-pad.right-5}" y="${sup55Y-4}" fill="#d2991d" font-size="10" text-anchor="end">浪④底 55.73 牛熊线</text>`;
+
+  // 57.16 Fib line
+  const fibY = yScale(57.16);
+  html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${fibY}" y2="${fibY}" stroke="#a371f7" stroke-width="1" stroke-dasharray="4,4"/>`;
+  html += `<text x="${W-pad.right-5}" y="${fibY-4}" fill="#a371f7" font-size="10" text-anchor="end">0.382 Fib 57.16</text>`;
+
+  svg.innerHTML = html;
+})();
+
+// ===== DAILY CHART (A-wave detail) =====
+(function drawDaily() {
+  const svg = document.getElementById('daily-chart');
+  const W = 1100, H = 380;
+  const pad = { top: 30, right: 30, bottom: 50, left: 70 };
+  const pw = W - pad.left - pad.right;
+  const ph = H - pad.top - pad.bottom;
+
+  const dData = data.filter(r => r.day >= '2026-05-01');
+  const yMin = 54, yMax = 82;
+  const xScale = i => pad.left + (i / (dData.length - 1)) * pw;
+  const yScale = v => pad.top + ph - ((v - yMin) / (yMax - yMin)) * ph;
+
+  let html = '';
+
+  // Grid
+  for (let y = 55; y <= 80; y += 5) {
+    const yy = yScale(y);
+    html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${yy}" y2="${yy}" stroke="#21262d" stroke-width="0.5"/>`;
+    html += `<text x="${pad.left-5}" y="${yy+4}" fill="#8b949e" font-size="10" text-anchor="end">${y}</text>`;
+  }
+
+  // Candles
+  for (let i = 0; i < dData.length; i++) {
+    const d = dData[i];
+    const x = xScale(i);
+    const bodyW = Math.max(1.5, pw / dData.length * 0.7);
+    const color = d.c >= d.o ? '#3fb950' : '#f85149';
+    html += `<line x1="${x}" x2="${x}" y1="${yScale(d.l)}" y2="${yScale(d.h)}" stroke="${color}" stroke-width="0.8"/>`;
+    const y1 = yScale(Math.max(d.o, d.c)), y2 = yScale(Math.min(d.o, d.c));
+    html += `<rect x="${x-bodyW/2}" y="${y2}" width="${bodyW}" height="${Math.max(0.3, y1-y2)}" fill="${color}" opacity="0.9"/>`;
+  }
+
+  // Volume bars at bottom
+  const volMax = Math.max(...dData.map(r => r.v));
+  const volH = 50, volY = H - pad.bottom + 10;
+  for (let i = 0; i < dData.length; i++) {
+    const d = dData[i];
+    const x = xScale(i);
+    const barH = (d.v / volMax) * volH;
+    const color = d.c >= d.o ? 'rgba(63,185,80,0.3)' : 'rgba(248,81,73,0.3)';
+    html += `<rect x="${x - 1}" y="${volY - barH}" width="${Math.max(1, pw/dData.length*0.8)}" height="${barH}" fill="${color}"/>`;
+  }
+  html += `<text x="${pad.left}" y="${H-5}" fill="#8b949e" font-size="9">成交量</text>`;
+
+  // A-wave annotations
+  const aWave = [
+    { day: '2026-05-08', price: 79.49, label: '⑤顶/A起点', color: '#f85149' },
+    { day: '2026-05-27', price: 64.52, label: 'A-1底', color: '#d2991d' },
+    { day: '2026-05-28', price: 66.41, label: 'A-2顶', color: '#3fb950' },
+    { day: '2026-06-08', price: 57.40, label: 'A-3底', color: '#d2991d' },
+    { day: '2026-06-10', price: 62.13, label: 'A-4顶', color: '#3fb950' },
+    { day: '2026-06-11', price: 57.15, label: 'A-5? 57.15', color: '#d2991d' },
+  ];
+
+  for (const pt of aWave) {
+    const idx = dData.findIndex(r => r.day >= pt.day);
+    if (idx < 0) continue;
+    const x = xScale(idx), y = yScale(pt.price);
+    html += `<circle cx="${x}" cy="${y}" r="4.5" fill="${pt.color}" stroke="#fff" stroke-width="1"/>`;
+    html += `<text x="${x}" y="${y - 12}" fill="${pt.color}" font-size="9" text-anchor="middle" font-weight="700">${pt.label}</text>`;
+  }
+
+  // Current position
+  const lastIdx = dData.length - 1, lastD = dData[lastIdx];
+  const lx = xScale(lastIdx), ly = yScale(lastD.c);
+  html += `<circle cx="${lx}" cy="${ly}" r="6" fill="#d2991d" stroke="#fff" stroke-width="2"/>`;
+  html += `<text x="${lx+6}" y="${ly-8}" fill="#d2991d" font-size="10" font-weight="700">现价 ${lastD.c}</text>`;
+
+  // 55.73 line
+  const sY = yScale(55.73);
+  html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${sY}" y2="${sY}" stroke="#d2991d" stroke-width="1.5" stroke-dasharray="8,4"/>`;
+  html += `<text x="${W-pad.right-5}" y="${sY-4}" fill="#d2991d" font-size="10" text-anchor="end" font-weight="700">浪④底 55.73 牛熊线</text>`;
+
+  // 57.16 Fib
+  const fY = yScale(57.16);
+  html += `<line x1="${pad.left}" x2="${W-pad.right}" y1="${fY}" y2="${fY}" stroke="#a371f7" stroke-width="1" stroke-dasharray="4,4"/>`;
+  html += `<text x="${W-pad.right-5}" y="${fY-4}" fill="#a371f7" font-size="10" text-anchor="end">0.382 Fib 57.16</text>`;
+
+  svg.innerHTML = html;
+})();
+</script>
+
+</body>
+</html>
